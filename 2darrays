@@ -1,0 +1,58 @@
+spiral order printing of matrix
+#include<iostream>
+using namespace std;
+int main(){
+    int n;
+    cout<<"enter the order of 2d matrix"<<endl;
+    cin>>n;
+    int arr[n][n];
+    cout<<"enter the elemnts of array "<<endl;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>arr[i][j];
+
+        }
+    }
+    cout<<endl;
+    
+    
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout<<arr[i][j]<<" ";
+
+        }
+        
+        cout<<endl;
+    }
+    int top=0;
+    int bottom =n-1;
+    int left=0;
+    int right=n-1;
+    while(top<=bottom && left<=right){//to print the middle one
+        for(int j=left;j<=right;j++){
+            cout<<arr[top][j]<<" ";
+            
+        }
+        top++;
+        for(int i=top;i<=bottom;i++){
+            cout<<arr[i][right]<<" ";
+            
+
+        }
+        right--;
+        if(top <= bottom){
+    for(int i = right; i >= left; i--){
+        cout << arr[bottom][i] << " ";
+    }
+    bottom--;
+}
+        if(left <= right){
+    for(int j = bottom; j >= top; j--){
+        cout << arr[j][left] << " ";
+    }
+    left++;
+}
+    }
+    return 0;
+    
+}
