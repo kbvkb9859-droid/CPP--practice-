@@ -174,4 +174,110 @@ int main(){
     }
     cout<<endl;
 }
-4.leetcode 23
+4.leetcode 84
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& arr) {
+        int n = arr.size();
+
+        vector<int> nsi(n), psi(n);
+        stack<int> st;
+
+        // Next Smaller Element Index
+        nsi[n - 1] = n;
+        st.push(n - 1);
+
+        for (int i = n - 2; i >= 0; i--) {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+
+            if (st.empty()) nsi[i] = n;
+            else nsi[i] = st.top();
+
+            st.push(i);
+        }
+
+        // Previous Smaller Element Index
+        while (!st.empty()) st.pop();
+
+        psi[0] = -1;
+        st.push(0);
+
+        for (int i = 1; i < n; i++) {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+
+            if (st.empty()) psi[i] = -1;
+            else psi[i] = st.top();
+
+            st.push(i);
+        }
+
+        // Calculate maximum area
+        int maxArea = 0;
+
+        for (int i = 0; i < n; i++) {
+            int height = arr[i];
+            int breadth = nsi[i] - psi[i] - 1;
+            int area = height * breadth;
+
+            maxArea = max(maxArea, area);
+        }
+
+        return maxArea;
+    }
+};
+5.leetcode 23.
+class Solution {
+public:
+ ListNode* merge(ListNode* a, ListNode* b) {
+
+        
+
+        ListNode* c = new ListNode(100);
+        ListNode* temp = c;
+        while(a!=NULL && b!=NULL){
+            //koi jarurat nhi hai temporary variable bnanen ki vaise bhi list tut ke ek hi bnegi to hm sirf head ko hi aage bdha dnge
+            if(a->val<=b->val){
+                temp->next=a;
+                a=a->next;
+                temp=temp->next;
+            }
+            else{// b ki value choti hai a ki value se
+                 temp->next=b;
+                b=b->next;
+                temp=temp->next;
+
+            }
+        }
+        if(a==NULL) temp->next=b;
+        else temp->next=a;
+        return c->next;
+
+        
+    }
+    ListNode* mergeKLists(vector<ListNode*>& arr) {
+        if(arr.size()==0) return NULL;
+        //meplty hai agr list
+        while(arr.size()>1){
+            //final avle ka size ek se bda hai to vapas se merge krke lao or push kro
+            ListNode* a=arr[0];
+           arr.erase(arr.begin());
+//ek ko pop back kr chuke hai to niche vala code pefrct kaam krega'
+            ListNode* b=arr[0];
+            arr.erase(arr.begin());
+            ListNode* c=merge(a,b);
+            arr.push_back(c);
+
+
+
+        }
+        return arr[0];
+        // arr={a,b,c,d,e} , here a,b,c,d are linked lists and piche se /
+        //pop krte jarhe hai or fir merge krke push krderhe hai 
+        //asa jb tk krenge jb tak arr me sirf ek linked list na bch jaye
+        
+    }
+};
+
